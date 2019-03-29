@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- h5上传方案 flash player -->
+    <!-- 选择文件的标签 -->
+    <!-- multiple多个文件的情况 -->
+    <input id="file" type="file" multiple />
+    <!-- 上传的按钮 -->
+    <button id="btn">上传</button>
+    <script>
+        let file = document.getElementById('file');
+        let btn = document.getElementById('btn');
+        btn.onclick = () => {
+            // 选择单个文件  二进制对象
+            console.log(file.files[0]);
+            // ajax
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            }
+            // 获取文件后缀
+            let name = file.files[0].name;
+            xhr.open('POST', `http://localhost:8888?name=${name}`, true);
+            // 设置请求头 设置文件类型
+            xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+            // 设置请求体
+            xhr.send(file.files[0]);
+        }
+    </script>
+</body>
+
+</html>
