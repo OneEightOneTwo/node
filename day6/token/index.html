@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="username" />
+    <input type="password" id="password" />
+    <button id="sign">登陆</button>
+    <button id="autoSign">自动登陆</button>
+    <script src="jquery.js"></script>
+    <script>
+        $('#sign').click(() => {
+            let username = $('#username').val();
+            let password = $('#password').val();
+            $.ajax({
+                url: "http://localhost:3000/sign/login",
+                type: "POST",
+                data: {
+                    username,
+                    password
+                }
+            }).done((data) => {
+                console.log(data);
+            })
+        });
+
+        $('#autoSign').click(() => {
+            let username = $('#username').val();
+            let password = $('#password').val();
+            $.ajax({
+                url: "http://localhost:3000/sign/autologin",
+                type: "POST",
+                data: {
+                    token: "eyJ1c2VybmFtZSI6IjEiLCJwYXNzd29yZCI6IjEifQ=="
+                }
+            }).done((data) => {
+                console.log(data);
+            })
+        });
+    </script>
+</body>
+
+</html>
