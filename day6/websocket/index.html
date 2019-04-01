@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea id="text"></textarea>
+    <button id="btn">发送信息</button>
+    <ul id="list"></ul>
+    <script>
+        // new XMLHttpRequest //ajax 单工通信
+        // http://localhost:8080
+        // 实例化一个WebSocket对象，实现WebSocket双工通信
+        var socket = new WebSocket('ws://10.3.138.42:8080'); //WebSocket
+        // H5的技术来的，具有兼容性
+        console.log(socket);
+        //监听服务端广播过来的消息
+        socket.onmessage = function (msg) {
+            console.log(msg.data);
+            // 返回信息，渲染到列表上
+            document.querySelector('#list').innerHTML+=`
+                <li>${msg.data}</li>
+            `;
+        }
+        document.querySelector('#btn').addEventListener('click', () => {
+            let text = document.querySelector('#text').value;
+            socket.send(text);
+            
+        })
+
+    </script>
+</body>
+
+</html>
